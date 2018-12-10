@@ -1,0 +1,19 @@
+#!/bin/bash
+
+while :; do
+  sleep 1
+
+  docker-compose exec db echo 'alive?' &>/dev/null
+  DB_UP=$?
+
+  docker-compose exec web echo 'alive?' &>/dev/null
+  APP_UP=$?
+
+  if [ $DB_UP -eq 0 ] && [ $APP_UP -eq 1 ]; then
+    break
+  else
+    echo -n "."
+  fi
+done
+
+echo "Ready for running web"
