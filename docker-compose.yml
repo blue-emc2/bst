@@ -16,6 +16,7 @@ services:
       - ./node_modules:/usr/src/app/node_modules:delegated
     ports:
       - 3000:3000
+      - 3035:3035
     depends_on:
       - db
 
