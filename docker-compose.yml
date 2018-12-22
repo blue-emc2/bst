@@ -4,22 +4,8 @@ services:
     image: postgres:11.1
     volumes:
       - db-data:/var/lib/postgresql/data
-
-  web:
-    build: .
-    command: ["./bin/update"]
-    tty: true
-    stdin_open: true
-    volumes:
-      - .:/usr/src/app:cached
-      - ./vendor/bundle:/usr/local/bundle:delegated
-      - ./node_modules:/usr/src/app/node_modules:delegated
     ports:
-      - 3000:3000
-      - 3035:3035
-    depends_on:
-      - db
+      - 5432:5432
 
 volumes:
   db-data:
-  bundle_cache:
