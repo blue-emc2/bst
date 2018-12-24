@@ -3,7 +3,11 @@ class ArticlesController < ApplicationController
 
   # GET /articles
   def index
-    @articles = Article.all
+    articles = Article.all
+    options = { each_serializer: ArticleSerializer }
+    serializable_resource = ActiveModelSerializers::SerializableResource.new(articles, options)
+
+    @articles = serializable_resource.as_json
   end
 
   # GET /articles/1

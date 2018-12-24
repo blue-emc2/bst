@@ -10,14 +10,15 @@ class Articles extends React.Component {
   render () {
     return (
       <React.Fragment>
-        Greeting: {this.props.articles[0].greeting}
+        Greeting: {this.props.articles[0].sections[0].body}
       </React.Fragment>
     );
   }
 }
 
 Articles.propTypes = {
-  articles: PropTypes.array
+  articles: PropTypes.array.isRequired,
+  sections: PropTypes.arrayOf(PropTypes.array)
 };
 
 export default Articles
