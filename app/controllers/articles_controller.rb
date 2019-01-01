@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_article, only: [:edit, :update, :destroy]
 
   # GET /articles
   def index
@@ -12,6 +12,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1
   def show
+    @article = set_article_json
   end
 
   # GET /articles/new
@@ -50,13 +51,22 @@ class ArticlesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_article
-      @article = Article.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def article_params
-      params.require(:article).permit(:status, :config, :style)
-    end
+  def set_article_json
+    article = Article.find(params[:id])
+    options = { each_serializer: ArticleSerializer }
+    serializable_resource = ActiveModelSerializers::SerializableResource.new(article, options)
+
+    serializable_resource.as_json.merge(config: article.config)
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_article
+    @article = Article.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def article_params
+    params.require(:article).permit(:status, :config, :style)
+  end
 end

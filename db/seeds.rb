@@ -27,6 +27,6 @@ config = {
     {i: nil}
   ]
 
-  a.config = config.to_json
+  a.config = config
   a.save!
 end

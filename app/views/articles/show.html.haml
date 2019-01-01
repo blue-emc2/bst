@@ -1,13 +1,8 @@
 %p#notice= notice
 
-%p
-  %b Status:
-  = @article.status
-%p
-  %b Config:
-  = @article.config
-%p
-  %b Style:
-  = @article.style
-
 = link_to 'Back', articles_path
+
+%p
+  = @article
+
+= react_component("article/Article", article: @article, prerender: true)

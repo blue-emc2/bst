@@ -40,7 +40,7 @@ const styles = theme => ({
   }
 })
 
-class ArticleBox extends React.Component {
+class ArticleBoxes extends React.Component {
   constructor(props) {
     super(props)
     console.info(props.articles)
@@ -84,9 +84,9 @@ class ArticleBox extends React.Component {
   }
 }
 
-ArticleBox.propTypes = {
+ArticleBoxes.propTypes = {
   articles: PropTypes.array.isRequired,
   sections: PropTypes.arrayOf(PropTypes.array)
 };
 
-export default withStyles(styles)(ArticleBox)
+export default withStyles(styles)(ArticleBoxes)
