@@ -15,6 +15,8 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker'
+gem 'react-rails'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
@@ -35,6 +37,8 @@ gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'haml-rails', '~> 1.0'
+
+gem 'active_model_serializers', '~> 0.10.8'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
