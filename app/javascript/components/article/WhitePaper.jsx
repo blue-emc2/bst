@@ -1,9 +1,12 @@
-import React from 'react'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { withStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import classNames from 'classnames'
-import Grid from '@material-ui/core/Grid'
+import React from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import classNames from 'classnames';
+import Grid from '@material-ui/core/Grid';
+import CardHeader from '@material-ui/core/CardHeader';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
   root: {
@@ -23,9 +26,9 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 8}px 0`,
   },
   card: {
-    height: 282,  // TODO: あとで可変にする
+    height: 282 + 72,  // TODO: あとで可変にする
     width: 400    // TODO: あとで可変にする
-  }
+  },
 })
 
 class WhitePaper extends React.Component {
@@ -45,6 +48,13 @@ class WhitePaper extends React.Component {
             <Grid container spacing={40} >
               <Grid item xs={6} container alignItems="center" justify="center">
                 <Card className={classes.card}>
+                  <CardHeader
+                    action={
+                      <IconButton>
+                        <MoreVertIcon />
+                      </IconButton>
+                    }
+                  />
                 </Card>
               </Grid>
               <Grid item xs={6} container alignItems="center" justify="center">
