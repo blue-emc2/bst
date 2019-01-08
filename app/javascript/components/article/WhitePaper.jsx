@@ -7,6 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import CardHeader from '@material-ui/core/CardHeader';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
   root: {
@@ -26,19 +30,37 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 8}px 0`,
   },
   card: {
-    height: 282 + 72,  // TODO: あとで可変にする
+    height: 282,  // TODO: あとで可変にする
     width: 400    // TODO: あとで可変にする
   },
 })
 
+function TabContainer(props) {
+  const { value } = props;
+
+  return (
+    <TextField
+      id="standard-name"
+      multiline
+      rowsMax="10"
+      margin="normal"
+    />
+  );
+}
+
 class WhitePaper extends React.Component {
   constructor(props) {
-    super(props)
-
+    super(props);
+    this.state = {value: 0};
   }
+
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
 
   render () {
     const { classes } = this.props;
+    const { value } = this.state;
 
     return (
       <React.Fragment>
@@ -47,14 +69,13 @@ class WhitePaper extends React.Component {
           <div className={classNames(classes.layout, classes.cardGrid)}>
             <Grid container spacing={40} >
               <Grid item xs={6} container alignItems="center" justify="center">
+                <Tabs value={value} onChange={this.handleChange}>
+                  <Tab label="文章に入力する" />
+                  <Tab label="画像をアップロードする" />
+                </Tabs>
                 <Card className={classes.card}>
-                  <CardHeader
-                    action={
-                      <IconButton>
-                        <MoreVertIcon />
-                      </IconButton>
-                    }
-                  />
+                  {value === 0 && <TabContainer>value</TabContainer>}
+                  {value === 1 && <TabContainer>value</TabContainer>}
                 </Card>
               </Grid>
               <Grid item xs={6} container alignItems="center" justify="center">
