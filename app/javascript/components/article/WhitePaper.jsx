@@ -41,21 +41,34 @@ class ImageDropZone extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isUploading: false,
       images: []
     };
 
-    this.handleOnDrop = this.handleOnDrop.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+    this.onCancel = this.onCancel.bind(this);
   }
 
-  handleOnDrop(files) {
+  onDrop(images) {
+    this.setState({images});
+  }
+
+  onCancel() {
+    this.setState({
+      images: []
+    });
   }
 
   render() {
+    const images = this.state.images.map(image => (
+      <li key={image.name}>
+        {image.name} - {image.size} bytes
+      </li>
+    ))
+
     return (
       <div>
         <h1>React S3 Image Uploader Sample</h1>
-        <Dropzone onDrop={this.handleOnDrop} accept="image/*">
+        <Dropzone onDrop={this.onDrop} onFileDialogCancel={this.onCancel} accept="image/*">
            {({getRootProps, getInputProps}) => (
             <div {...getRootProps()}>
               <input {...getInputProps()} />
@@ -63,14 +76,10 @@ class ImageDropZone extends React.Component {
             </div>
           )}
         </Dropzone>
-        {this.state.isUploading ?
-          <div>ファイルをアップロードしています</div> :
-          <div>ここに画像をドラックまたはクリック</div>}
-        {this.state.images.length > 0 &&
-          <div style={{margin: 30}}>
-            {this.state.images.map(({name, url}) =>
-              <img key={name} src={url} style={{width: 200, height: 200}}/>)}
-          </div>}
+        <aside>
+          <h4>Files</h4>
+          <ul>{images}</ul>
+        </aside>
       </div>
     );
   }
