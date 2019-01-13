@@ -13,6 +13,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Dropzone from 'react-dropzone'
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -116,39 +117,89 @@ TabContainer.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-class WhitePaper extends React.Component {
+class Cell extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: 'text'};
+    this.state = { value: 'text' };
   }
 
   handleChange = (event, value) => {
     this.setState({ value });
   };
 
-  render () {
+  render() {
     const { classes } = this.props;
     const { value } = this.state;
+
+    return (
+      <Grid item xs={6} container alignItems="center" justify="center">
+        <Tabs value={value} onChange={this.handleChange}>
+          <Tab value='text' label="文章に入力する" />
+          <Tab value='image' label="画像をアップロードする" />
+        </Tabs>
+        <Card className={classes.card}>
+          <TabContainer type={value} />
+        </Card>
+      </Grid>
+    )
+  }
+}
+
+class CellList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const list = [...Array(props.cells)].map(() => "input");
+    this.state = {
+      cell_list: list
+    };
+  }
+
+  addCell() {
+    this.setState({
+      cell_list: this.state.cell_list.concat("input")
+    })
+  }
+
+  render () {
+    // cell_listを元にcellを復元する
+    const { cell_list } = this.state;
+
+    const inputCells = cell_list.map((value, index) =>
+      <Cell key={index} role={value} {...this.props} />
+    )
+
+    let last_id = inputCells.length;
+    inputCells.push(<Cell key={last_id} role={"appending"} {...this.props} />);
+    return inputCells;
+  }
+}
+
+class WhitePaper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { cells: 1 };
+    this.cell = React.createRef();
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    this.cell.current.addCell();
+  }
+
+  render () {
+    const { classes } = this.props;
 
     return (
       <React.Fragment>
         <CssBaseline />
         <main>
+          <Button variant="contained" onClick={this.onClick}>
+            Default
+          </Button>
           <div className={classNames(classes.layout, classes.cardGrid)}>
             <Grid container spacing={40} >
-              <Grid item xs={6} container alignItems="center" justify="center">
-                <Tabs value={value} onChange={this.handleChange}>
-                  <Tab value='text' label="文章に入力する" />
-                  <Tab value='image' label="画像をアップロードする" />
-                </Tabs>
-                <Card className={classes.card}>
-                  <TabContainer type={value} />
-                </Card>
-              </Grid>
-              <Grid item xs={6} container alignItems="center" justify="center">
-                <Card className={classes.card}>
-                </Card>
-              </Grid>
+              <CellList cells={this.state.cells} ref={this.cell} {...this.props} />
             </Grid>
           </div>
         </main>
