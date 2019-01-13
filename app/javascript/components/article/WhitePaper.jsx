@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Dropzone from 'react-dropzone'
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = theme => ({
   root: {
@@ -35,6 +37,9 @@ const styles = theme => ({
   card: {
     height: 282,  // TODO: あとで可変にする
     width: 400    // TODO: あとで可変にする
+  },
+  fab: {
+    margin: theme.spacing.unit,
   },
 })
 
@@ -149,29 +154,26 @@ class CellList extends React.Component {
   constructor(props) {
     super(props);
 
-    const list = [...Array(props.cells)].map(() => "input");
+    const list = [...Array(props.cells)].map((_, index) => index);
     this.state = {
       cell_list: list
     };
   }
 
   addCell() {
+    const id = this.state.cell_list.length
     this.setState({
-      cell_list: this.state.cell_list.concat("input")
+      cell_list: this.state.cell_list.concat(id)
     })
   }
 
   render () {
-    // cell_listを元にcellを復元する
-    const { cell_list } = this.state;
-
-    const inputCells = cell_list.map((value, index) =>
-      <Cell key={index} role={value} {...this.props} />
+    return (
+      // cell_listを元にcellを生成する
+      this.state.cell_list.map((id) =>
+        <Cell key={id} {...this.props} />
+      )
     )
-
-    let last_id = inputCells.length;
-    inputCells.push(<Cell key={last_id} role={"appending"} {...this.props} />);
-    return inputCells;
   }
 }
 
@@ -194,9 +196,9 @@ class WhitePaper extends React.Component {
       <React.Fragment>
         <CssBaseline />
         <main>
-          <Button variant="contained" onClick={this.onClick}>
-            Default
-          </Button>
+          <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.onClick}>
+            <AddIcon />
+          </Fab>
           <div className={classNames(classes.layout, classes.cardGrid)}>
             <Grid container spacing={40} >
               <CellList cells={this.state.cells} ref={this.cell} {...this.props} />
