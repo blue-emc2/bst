@@ -206,13 +206,18 @@ class CellList extends React.Component {
 class WhitePaper extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { cells: 1 };
+    this.state = { cells: 1, value: "1" };
     this.cell = React.createRef();
     this.onClick = this.onClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   onClick() {
     this.cell.current.addCell();
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
   }
 
   render () {
@@ -222,6 +227,15 @@ class WhitePaper extends React.Component {
       <React.Fragment>
         <CssBaseline />
         <main>
+          <label>
+            何列にしますか？
+            <select value={this.state.value} onChange={this.handleChange}>
+              <option value="" />
+              <option value={1}>1列</option>
+              <option value={2}>2列</option>
+              <option value={3}>3列</option>
+            </select>
+          </label>
           <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.onClick}>
             <AddIcon />
           </Fab>
