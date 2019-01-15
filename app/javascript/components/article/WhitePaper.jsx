@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import classNames from 'classnames';
 import Grid from '@material-ui/core/Grid';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -126,10 +128,16 @@ class Cell extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: 'text' };
+    this.handleChange = this.handleChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
-  handleChange = (event, value) => {
+  handleChange(event, value) {
     this.setState({ value });
+  };
+
+  onClick(id) {
+    this.props.deleteCell(id);
   };
 
   render() {
@@ -143,11 +151,20 @@ class Cell extends React.Component {
           <Tab value='image' label="画像をアップロードする" />
         </Tabs>
         <Card className={classes.card}>
-          <TabContainer type={value} />
+          <CardContent>
+            <TabContainer type={value} />
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={() => this.onClick(this.props['data-key'])}>削除</Button>
+          </CardActions>
         </Card>
       </Grid>
     )
   }
+}
+
+Cell.propTypes = {
+  deleteCell: PropTypes.func.isRequired,
 }
 
 class CellList extends React.Component {
@@ -167,11 +184,20 @@ class CellList extends React.Component {
     })
   }
 
+  deleteCell(target_id) {
+    const new_cells = this.state.cell_list.filter(cell => cell !== target_id);
+    // TODO: あとでバリデーションを入れる
+
+    this.setState({
+      cell_list: new_cells
+    })
+  }
+
   render () {
     return (
       // cell_listを元にcellを生成する
       this.state.cell_list.map((id) =>
-        <Cell key={id} {...this.props} />
+        <Cell key={id} data-key={id} deleteCell={this.deleteCell.bind(this)} {...this.props} />
       )
     )
   }
@@ -209,5 +235,9 @@ class WhitePaper extends React.Component {
     )
   }
 }
+
+WhitePaper.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(WhitePaper)
