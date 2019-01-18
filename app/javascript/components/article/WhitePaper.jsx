@@ -229,8 +229,7 @@ class WhitePaper extends React.Component {
         <main>
           <label>
             何列にしますか？
-            <select value={this.state.value} onChange={this.handleChange}>
-              <option value="" />
+            <select name="article[col]" value={this.state.value} onChange={this.handleChange}>
               <option value={1}>1列</option>
               <option value={2}>2列</option>
               <option value={3}>3列</option>
