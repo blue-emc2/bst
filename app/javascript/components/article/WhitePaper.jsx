@@ -76,7 +76,7 @@ class ImageDropZone extends React.Component {
     return (
       <div>
         <h1>React S3 Image Uploader Sample</h1>
-        <Dropzone onDrop={this.onDrop} onFileDialogCancel={this.onCancel} accept="image/*">
+        <Dropzone name={this.props.name} onDrop={this.onDrop} onFileDialogCancel={this.onCancel} accept="image/*">
            {({getRootProps, getInputProps}) => (
             <div {...getRootProps()}>
               <input {...getInputProps()} />
@@ -98,23 +98,23 @@ class TabContainer extends React.Component {
     super(props);
   }
 
-  renderTextOrImage(type) {
+  renderTextOrImage(type, id) {
     if (type === 'text') {
       return <TextField
-        id="standard-name"
+        name="article[bodys][]"
         multiline
         rowsMax="10"
         margin="normal"
       />
     } else {
-      return <ImageDropZone />
+      return <ImageDropZone name="article[bodys][]" />
     }
   }
 
   render() {
     return (
       <React.Fragment>
-        {this.renderTextOrImage(this.props.type)}
+        {this.renderTextOrImage(this.props.type, this.props['data-key'])}
       </React.Fragment>
     )
   }
@@ -152,7 +152,7 @@ class Cell extends React.Component {
         </Tabs>
         <Card className={classes.card}>
           <CardContent>
-            <TabContainer type={value} />
+            <TabContainer type={value} {...this.props}/>
           </CardContent>
           <CardActions>
             <Button size="small" onClick={() => this.onClick(this.props['data-key'])}>削除</Button>
