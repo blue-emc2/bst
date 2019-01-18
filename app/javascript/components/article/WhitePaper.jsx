@@ -18,6 +18,7 @@ import Dropzone from 'react-dropzone'
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const styles = theme => ({
   root: {
@@ -155,7 +156,9 @@ class Cell extends React.Component {
             <TabContainer type={value} {...this.props}/>
           </CardContent>
           <CardActions>
-            <Button size="small" onClick={() => this.onClick(this.props['data-key'])}>削除</Button>
+            <IconButton aria-label="Delete">
+              <DeleteIcon size="small" onClick={() => this.onClick(this.props['data-key'])}>削除</DeleteIcon>
+            </IconButton>
           </CardActions>
         </Card>
       </Grid>
