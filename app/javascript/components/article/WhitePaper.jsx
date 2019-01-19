@@ -19,6 +19,9 @@ import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import CreateIcon from '@material-ui/icons/Create';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const styles = theme => ({
   root: {
@@ -156,8 +159,19 @@ class Cell extends React.Component {
             <TabContainer type={value} {...this.props}/>
           </CardContent>
           <CardActions>
+            <IconButton>
+              <CreateIcon />
+            </IconButton>
+            <label htmlFor="icon-button-file">
+              <IconButton component="span">
+                <PhotoCamera />
+              </IconButton>
+            </label>
+            <IconButton>
+              <VisibilityIcon />
+            </IconButton>
             <IconButton aria-label="Delete">
-              <DeleteIcon size="small" onClick={() => this.onClick(this.props['data-key'])}>削除</DeleteIcon>
+              <DeleteIcon size="small" onClick={() => this.onClick(this.props['data-key'])} />
             </IconButton>
           </CardActions>
         </Card>
