@@ -11,12 +11,14 @@ import CreateIcon from '@material-ui/icons/Create';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import TextField from '@material-ui/core/TextField';
 
-class TabContainer extends React.Component {
+import ImageDropZone from './ImageDropZone';
+
+class Content extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  renderTextOrImage(type, id) {
+  getComponents(type, id) {
     if (type === 'text') {
       return <TextField
         name="article[bodys][]"
@@ -24,34 +26,36 @@ class TabContainer extends React.Component {
         rowsMax="10"
         margin="normal"
       />
-    } else {
+    } else if(type === 'image') {
       return <ImageDropZone name="article[bodys][]" />
+    } else if (type === 'preview') {
+      return <div name="preview" />
     }
   }
 
   render() {
     return (
       <React.Fragment>
-        {this.renderTextOrImage(this.props.type, this.props['data-key'])}
+        {this.getComponents(this.props.type, this.props['data-key'])}
       </React.Fragment>
     )
   }
 }
 
-TabContainer.propTypes = {
+Content.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
 class Cell extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: 'text' };
-    this.handleChange = this.handleChange.bind(this);
+    this.state = { type: 'text' };
+    this.changeContent = this.changeContent.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
-  handleChange(event, value) {
-    this.setState({ value });
+  changeContent(type, e) {
+    this.setState({type: type})
   };
 
   onClick(id) {
@@ -60,25 +64,23 @@ class Cell extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
+    const { type } = this.state;
 
     return (
       <Grid item xs={6} container alignItems="center" justify="center">
         <Card className={classes.card}>
           <CardContent>
-            <TabContainer type={value} {...this.props}/>
+            <Content type={type} {...this.props}/>
           </CardContent>
           <CardActions>
             <IconButton>
-              <CreateIcon />
+              <CreateIcon onClick={(e) => this.changeContent('text', e)} />
             </IconButton>
-            <label htmlFor="icon-button-file">
-              <IconButton component="span">
-                <PhotoCamera />
+              <IconButton>
+                <PhotoCamera onClick={(e) => this.changeContent('image', e)} />
               </IconButton>
-            </label>
             <IconButton>
-              <VisibilityIcon />
+              <VisibilityIcon onClick={(e) => this.changeContent('preview', e)} />
             </IconButton>
             <IconButton aria-label="Delete">
               <DeleteIcon size="small" onClick={() => this.onClick(this.props['data-key'])} />
