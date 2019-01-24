@@ -1,4 +1,6 @@
 import React from 'react';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -10,26 +12,31 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import CreateIcon from '@material-ui/icons/Create';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
 
 import ImageDropZone from './ImageDropZone';
 
 class Content extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      dummy: "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。"
+    }
   }
 
   getComponents(type, id) {
-    if (type === 'text') {
+    if (type === 0) {
       return <TextField
         name="article[bodys][]"
         multiline
         rowsMax="10"
         margin="normal"
+        value={this.state.dummy}
       />
-    } else if(type === 'image') {
+    } else if(type === 1) {
       return <ImageDropZone name="article[bodys][]" />
-    } else if (type === 'preview') {
-      return <div name="preview" />
+    } else if (type === 2) {
+      return <Preview />
     }
   }
 
@@ -43,19 +50,19 @@ class Content extends React.Component {
 }
 
 Content.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.number.isRequired,
 };
 
 class Cell extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { type: 'text' };
-    this.changeContent = this.changeContent.bind(this);
+    this.state = { value: 0 };
+    this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
-  changeContent(type, e) {
-    this.setState({type: type})
+  onChange(e, value) {
+    this.setState({ value: value });
   };
 
   onClick(id) {
@@ -64,29 +71,31 @@ class Cell extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { type } = this.state;
+    const { value } = this.state;
 
     return (
       <Grid item xs={6} container alignItems="center" justify="center">
-        <Card className={classes.card}>
-          <CardContent>
-            <Content type={type} {...this.props}/>
-          </CardContent>
-          <CardActions>
+        <Paper className={classes.card}>
+          <Content type={value} {...this.props}/>
+        </Paper>
+        <BottomNavigation onChange={this.onChange} >
+          <BottomNavigationAction label="文章" icon={<CreateIcon />} />
+          <BottomNavigationAction label="イメージ" icon={<PhotoCamera />} />
+          <BottomNavigationAction label="プレビュー" icon={<VisibilityIcon />} />
+          <BottomNavigationAction label="削除" icon={<DeleteIcon />} />
+          {/* <IconButton>
+            <CreateIcon onClick={(e) => this.changeContent('text', e)} />
+          </IconButton>
             <IconButton>
-              <CreateIcon onClick={(e) => this.changeContent('text', e)} />
+              <PhotoCamera onClick={(e) => this.changeContent('image', e)} />
             </IconButton>
-              <IconButton>
-                <PhotoCamera onClick={(e) => this.changeContent('image', e)} />
-              </IconButton>
-            <IconButton>
-              <VisibilityIcon onClick={(e) => this.changeContent('preview', e)} />
-            </IconButton>
-            <IconButton aria-label="Delete">
-              <DeleteIcon size="small" onClick={() => this.onClick(this.props['data-key'])} />
-            </IconButton>
-          </CardActions>
-        </Card>
+          <IconButton>
+            <VisibilityIcon onClick={(e) => this.changeContent('preview', e)} />
+          </IconButton>
+          <IconButton aria-label="Delete">
+            <DeleteIcon size="small" onClick={() => this.onClick(this.props['data-key'])} />
+          </IconButton> */}
+        </BottomNavigation>
       </Grid>
     )
   }
