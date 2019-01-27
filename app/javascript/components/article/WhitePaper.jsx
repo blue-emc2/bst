@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import Cell from './Cell'
+import SectionList from './SectionList';
 
 const styles = theme => ({
   root: {
@@ -37,42 +37,6 @@ const styles = theme => ({
     bottom: 0
   },
 })
-
-class CellList extends React.Component {
-  constructor(props) {
-    super(props);
-
-    const list = [...Array(props.cells)].map((_, index) => index);
-    this.state = {
-      cell_list: list
-    };
-  }
-
-  addCell() {
-    const id = this.state.cell_list.length
-    this.setState({
-      cell_list: this.state.cell_list.concat(id)
-    })
-  }
-
-  deleteCell(target_id) {
-    const new_cells = this.state.cell_list.filter(cell => cell !== target_id);
-    // TODO: あとでバリデーションを入れる
-
-    this.setState({
-      cell_list: new_cells
-    })
-  }
-
-  render () {
-    return (
-      // cell_listを元にcellを生成する
-      this.state.cell_list.map((id) =>
-        <Cell key={id} data-key={id} deleteCell={this.deleteCell.bind(this)} {...this.props} />
-      )
-    )
-  }
-}
 
 class WhitePaper extends React.Component {
   constructor(props) {
@@ -111,7 +75,7 @@ class WhitePaper extends React.Component {
           </Fab>
           <div className={classNames(classes.layout, classes.cardGrid)}>
             <Grid container spacing={40} >
-              <CellList cells={this.state.cells} ref={this.cell} {...this.props} />
+              <SectionList cells={this.state.cells} ref={this.cell} {...this.props} />
             </Grid>
           </div>
         </main>
