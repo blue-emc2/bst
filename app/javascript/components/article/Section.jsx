@@ -53,7 +53,7 @@ Content.propTypes = {
   type: PropTypes.number.isRequired,
 };
 
-class Cell extends React.Component {
+class Section extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: 0 };
@@ -101,8 +101,8 @@ class Cell extends React.Component {
   }
 }
 
-Cell.propTypes = {
+Section.propTypes = {
   deleteCell: PropTypes.func.isRequired,
 }
 
-export default Cell
+export default Section
