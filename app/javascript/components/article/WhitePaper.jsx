@@ -41,18 +41,18 @@ const styles = theme => ({
 class WhitePaper extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { cells: 1, value: "1" };
-    this.cell = React.createRef();
+    this.state = { rowCount: "1" };
+    this.sectionRef = React.createRef();
     this.onClick = this.onClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   onClick() {
-    this.cell.current.addCell();
+    this.sectionRef.current.addSection();
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({rowCount: event.target.value});
   }
 
   render () {
@@ -64,10 +64,10 @@ class WhitePaper extends React.Component {
         <main>
           <label>
             何列にしますか？
-            <select name="article[col]" value={this.state.value} onChange={this.handleChange}>
-              <option value={1}>1列</option>
-              <option value={2}>2列</option>
-              <option value={3}>3列</option>
+            <select name="article[col]" value={this.state.rowCount} onChange={this.handleChange}>
+              <option value={"1"}>1列</option>
+              <option value={"2"}>2列</option>
+              <option value={"3"}>3列</option>
             </select>
           </label>
           <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.onClick}>
@@ -75,7 +75,10 @@ class WhitePaper extends React.Component {
           </Fab>
           <div className={classNames(classes.layout, classes.cardGrid)}>
             <Grid container spacing={40} >
-              <SectionList cells={this.state.cells} ref={this.cell} {...this.props} />
+              <SectionList
+                rowCount={this.state.rowCount}
+                sectionRef={(ref) => { this.sectionRef = ref; }}
+                {...this.props} />
             </Grid>
           </div>
         </main>

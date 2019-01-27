@@ -66,7 +66,7 @@ class Section extends React.Component {
   };
 
   onClick(id) {
-    this.props.deleteCell(id);
+    this.props.deleteSection(id);
   };
 
   render() {
@@ -102,7 +102,7 @@ class Section extends React.Component {
 }
 
 Section.propTypes = {
-  deleteCell: PropTypes.func.isRequired,
+  deleteSection: PropTypes.func.isRequired,
 }
 
-export default Section
+export default Section;
