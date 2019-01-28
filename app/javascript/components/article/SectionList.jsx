@@ -8,6 +8,7 @@ class SectionList extends React.Component {
 
     const list = [...Array(props.rowCount)].map((_, index) => index);
     this.state = { sections: list };
+    this.deleteSection = this.deleteSection.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -29,8 +30,8 @@ class SectionList extends React.Component {
     })
   }
 
-  deleteSection(target_id) {
-    const newSections = this.state.sections.filter(cell => cell !== target_id);
+  deleteSection(targetId) {
+    const newSections = this.state.sections.filter(cell => cell !== targetId);
     // TODO: あとでバリデーションを入れる
 
     this.setState({
@@ -47,7 +48,7 @@ class SectionList extends React.Component {
         <Section
           key={id}
           data-key={id}
-          deleteSection={this.deleteSection.bind(this)}
+          deleteSection={this.deleteSection}
           {...this.props} />
       )
     )

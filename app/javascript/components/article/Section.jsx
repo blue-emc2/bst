@@ -82,19 +82,7 @@ class Section extends React.Component {
           <BottomNavigationAction label="文章" icon={<CreateIcon />} />
           <BottomNavigationAction label="イメージ" icon={<PhotoCamera />} />
           <BottomNavigationAction label="プレビュー" icon={<VisibilityIcon />} />
-          <BottomNavigationAction label="削除" icon={<DeleteIcon />} />
-          {/* <IconButton>
-            <CreateIcon onClick={(e) => this.changeContent('text', e)} />
-          </IconButton>
-            <IconButton>
-              <PhotoCamera onClick={(e) => this.changeContent('image', e)} />
-            </IconButton>
-          <IconButton>
-            <VisibilityIcon onClick={(e) => this.changeContent('preview', e)} />
-          </IconButton>
-          <IconButton aria-label="Delete">
-            <DeleteIcon size="small" onClick={() => this.onClick(this.props['data-key'])} />
-          </IconButton> */}
+          <BottomNavigationAction label="削除" icon={<DeleteIcon onClick={() => this.onClick(this.props['data-key'])} />} />
         </BottomNavigation>
       </Grid>
     )
