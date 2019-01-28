@@ -10,8 +10,12 @@ class SectionList extends React.Component {
     this.state = { sections: list };
   }
 
-  shouldComponentUpdate(prevProps) {
-    if (prevProps.rowCount != this.props.rowCount) {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.rowCount !== nextProps.rowCount) {
+      return true;
+    }
+
+    if (this.state.sections.length !== nextState.sections.length) {
       return true;
     }
 
@@ -19,9 +23,9 @@ class SectionList extends React.Component {
   }
 
   addSection() {
-    const id = this.state.sections.length;
+    const newId = this.state.sections.length;
     this.setState({
-      sections: this.state.sections.concat(id)
+      sections: this.state.sections.concat(newId)
     })
   }
 
@@ -35,6 +39,8 @@ class SectionList extends React.Component {
   }
 
   render () {
+    console.log(this.state.sections);
+
     return (
       // sectionsを元にcellを生成する
       this.state.sections.map((id) =>

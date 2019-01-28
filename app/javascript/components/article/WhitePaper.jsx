@@ -48,7 +48,7 @@ class WhitePaper extends React.Component {
   }
 
   onClick() {
-    this.sectionRef.current.addSection();
+    this.sectionRef.addSection();
   }
 
   handleChange(event) {
@@ -77,7 +77,7 @@ class WhitePaper extends React.Component {
             <Grid container spacing={40} >
               <SectionList
                 rowCount={this.state.rowCount}
-                sectionRef={(ref) => { this.sectionRef = ref; }}
+                ref={(ref) => { this.sectionRef = ref; }}
                 {...this.props} />
             </Grid>
           </div>
