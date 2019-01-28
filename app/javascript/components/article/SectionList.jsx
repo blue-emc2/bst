@@ -10,11 +10,12 @@ class SectionList extends React.Component {
     this.state = { sections: list };
   }
 
-  componentDidUpdate(prevProps) {
+  shouldComponentUpdate(prevProps) {
     if (prevProps.rowCount != this.props.rowCount) {
-      const list = [...Array(this.props.rowCount)].map((_, index) => index);
-      this.state = { sections: list };
+      return true;
     }
+
+    return false;
   }
 
   addSection() {
@@ -34,8 +35,6 @@ class SectionList extends React.Component {
   }
 
   render () {
-    // console.log(this.state.sections);
-
     return (
       // sectionsを元にcellを生成する
       this.state.sections.map((id) =>
