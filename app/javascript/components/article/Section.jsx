@@ -16,6 +16,13 @@ import Paper from '@material-ui/core/Paper';
 
 import ImageDropZone from './ImageDropZone';
 
+// TODO: とりあえずテキストのみをうけとる
+function Preview({ data }) {
+  return (
+    <div>{data}</div>
+  );
+}
+
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +43,7 @@ class Content extends React.Component {
     } else if(type === 1) {
       return <ImageDropZone name="article[bodys][]" />
     } else if (type === 2) {
-      return <Preview />
+      return <Preview data={this.state.dummy} />
     }
   }
 
@@ -76,6 +83,7 @@ class Section extends React.Component {
     return (
       <Grid item xs={6} container alignItems="center" justify="center">
         <Paper className={classes.card}>
+          {/* TODO: Contentでまとめる必要はなさそう。あとで分解する */}
           <Content type={value} {...this.props}/>
         </Paper>
         <BottomNavigation onChange={this.onChange} >
