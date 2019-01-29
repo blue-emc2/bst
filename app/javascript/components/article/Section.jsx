@@ -15,11 +15,18 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 
 import ImageDropZone from './ImageDropZone';
+import { Typography } from '@material-ui/core';
 
 // TODO: とりあえずテキストのみをうけとる
 function Preview({ data }) {
   return (
-    <div>{data}</div>
+    <Card>
+      <CardContent>
+        <Typography>
+          { data }
+        </Typography>
+      </CardContent>
+    </Card>
   );
 }
 
