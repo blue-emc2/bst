@@ -40,8 +40,6 @@ class SectionList extends React.Component {
   }
 
   render () {
-    console.log(this.state.sections);
-
     return (
       // sectionsを元にcellを生成する
       this.state.sections.map((id) =>

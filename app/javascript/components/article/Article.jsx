@@ -62,7 +62,6 @@ class Section extends React.Component {
 class Column extends React.Component {
   constructor(props) {
     super(props)
-    console.info(props)
   }
 
   render () {
