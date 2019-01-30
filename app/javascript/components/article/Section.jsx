@@ -1,71 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import CreateIcon from '@material-ui/icons/Create';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 
-import ImageDropZone from './ImageDropZone';
-import { Typography } from '@material-ui/core';
-
-// TODO: とりあえずテキストのみをうけとる
-function Preview({ data }) {
-  return (
-    <Card>
-      <CardContent>
-        <Typography>
-          { data }
-        </Typography>
-      </CardContent>
-    </Card>
-  );
-}
-
-class Content extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dummy: "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。"
-    }
-  }
-
-  getComponents(type, id) {
-    if (type === 0) {
-      return <TextField
-        name="article[bodys][]"
-        multiline
-        rowsMax="10"
-        margin="normal"
-        value={this.state.dummy}
-      />
-    } else if(type === 1) {
-      return <ImageDropZone name="article[bodys][]" />
-    } else if (type === 2) {
-      return <Preview data={this.state.dummy} />
-    }
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        {this.getComponents(this.props.type, this.props['data-key'])}
-      </React.Fragment>
-    )
-  }
-}
-
-Content.propTypes = {
-  type: PropTypes.number.isRequired,
-};
+import Switcher from './Switcher';
 
 class Section extends React.Component {
   constructor(props) {
@@ -90,8 +34,7 @@ class Section extends React.Component {
     return (
       <Grid item xs={6} container alignItems="center" justify="center">
         <Paper className={classes.card}>
-          {/* TODO: Contentでまとめる必要はなさそう。あとで分解する */}
-          <Content type={value} {...this.props}/>
+          <Switcher type={value}/>
         </Paper>
         <BottomNavigation onChange={this.onChange} >
           <BottomNavigationAction label="文章" icon={<CreateIcon />} />
