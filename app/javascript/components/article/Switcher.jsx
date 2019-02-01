@@ -28,12 +28,14 @@ class Switcher extends React.Component {
       dummy: "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。"
     }
 
+    this.valueStore = ""; // ここに値をためておいてcomponentの切り替え時に値を渡す
+
     this.changeContent = this.changeContent.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
   onChange(e) {
-    console.log("value=", e.target.value);
+    this.valueStore = e.target.value;
   }
 
   changeContent(type) {
@@ -43,12 +45,13 @@ class Switcher extends React.Component {
         multiline
         rowsMax="10"
         margin="normal"
+        defaultValue={this.valueStore}
         onChange={this.onChange}
       />
     } else if(type === 1) {
       return <ImageDropZone name="article[bodys][]" />
     } else if (type === 2) {
-      return <Preview data={this.state.dummy} />
+      return <Preview data={this.valueStore} />
     }
   }
 
