@@ -43,7 +43,6 @@ const styles = theme => ({
 class ArticleBoxes extends React.Component {
   constructor(props) {
     super(props)
-    console.info(props.articles)
   }
 
   render () {
