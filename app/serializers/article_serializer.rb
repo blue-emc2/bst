@@ -1,5 +1,5 @@
 class ArticleSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :col
 
   has_many :sections
 end

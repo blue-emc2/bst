@@ -45,18 +45,20 @@ const styles = theme => ({
   }
 })
 
-class Section extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+function Section({ body }) {
+  return (
+    <Card>
+      <CardContent>
+        <Typography>
+          { body }
+        </Typography>
+      </CardContent>
+    </Card>
+  )
+}
 
-  render () {
-    const { classes } = this.props
-
-    return (
-      <Paper className={classes.paper}>item1</Paper>
-    )
-  }
+Section.propTypes = {
+  body: PropTypes.any.isRequired
 }
 
 class Column extends React.Component {
@@ -65,15 +67,14 @@ class Column extends React.Component {
   }
 
   render () {
-    const { classes } = this.props
     const { sections } = this.props.article
 
     // TODO: xsはとりあえずauto layoutにしておく
     return (
       <React.Fragment>
-        {sections.map((e, index) =>
-          <Grid item xs key={index}>
-            <Section classes={classes} />
+        {sections.map((e) =>
+          <Grid item xs key={e.id}>
+            <Section body={e.body} />
           </Grid>
         )}
       </React.Fragment>
@@ -81,9 +82,10 @@ class Column extends React.Component {
   }
 }
 
-class ArticleBox extends React.Component {
+class Article extends React.Component {
   constructor(props) {
     super(props)
+    this.col = 12 / props.article.col;
   }
 
   render () {
@@ -95,11 +97,8 @@ class ArticleBox extends React.Component {
         <main>
           <div className={classes.root}>
             <Grid container spacing={8}>
-              <Grid container item xs={6} spacing={24} direction="column">
-                <Column classes={classes} article={this.props.article} />
-              </Grid>
-              <Grid container item xs={6} spacing={24} direction="column">
-                <Column classes={classes} article={this.props.article} />
+              <Grid container item xs={this.col} spacing={24}>
+                <Column classes={classes} {...this.props} />
               </Grid>
             </Grid>
           </div>
@@ -109,9 +108,9 @@ class ArticleBox extends React.Component {
   }
 }
 
-ArticleBox.propTypes = {
+Article.propTypes = {
   article: PropTypes.any.isRequired,
   sections: PropTypes.arrayOf(PropTypes.array)
 };
 
-export default withStyles(styles)(ArticleBox)
+export default withStyles(styles)(Article)
