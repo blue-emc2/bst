@@ -6,9 +6,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import Paper from "@material-ui/core/Paper";
+
+import SectionOnlyViewList from './SectionOnlyViewList';
 
 const styles = theme => ({
   root: {
@@ -95,11 +95,11 @@ class Article extends React.Component {
       <React.Fragment>
         <CssBaseline />
         <main>
-          <div className={classes.root}>
-            <Grid container spacing={8}>
-              <Grid container item xs={this.col} spacing={24}>
-                <Column classes={classes} {...this.props} />
-              </Grid>
+          <div className={classNames(classes.layout, classes.cardGrid)}>
+            <Grid container spacing={40}>
+              <SectionOnlyViewList
+                rowCount={this.props.article.col}
+                {...this.props} />
             </Grid>
           </div>
         </main>
