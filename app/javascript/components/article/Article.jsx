@@ -8,8 +8,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-import SectionOnlyViewList from './SectionOnlyViewList';
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -28,22 +26,41 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 8}px 0`,
   },
   card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    height: 282,  // TODO: あとで可変にする
+    width: 400    // TODO: あとで可変にする
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
   },
   cardContent: {
     flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing.unit,
-    textAlign: "center",
-    color: theme.palette.text.secondary
   }
 })
+
+function SectionOnlyView(props) {
+  const { section } = props;
+  const { classes } = props;
+
+  return (
+    <Grid item xs={6} container alignItems="center" justify="center">
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography>
+            {section.body}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Grid>
+  )
+}
+
+function SectionOnlyViewList(props) {
+  return (
+    props.article.sections.map((e, index) =>
+      <SectionOnlyView section={e} key={index} {...props} />
+    )
+  )
+}
 
 class Article extends React.Component {
   constructor(props) {
@@ -60,9 +77,7 @@ class Article extends React.Component {
         <main>
           <div className={classNames(classes.layout, classes.cardGrid)}>
             <Grid container spacing={40}>
-              <SectionOnlyViewList
-                rowCount={this.props.article.col}
-                {...this.props} />
+              <SectionOnlyViewList {...this.props} />
             </Grid>
           </div>
         </main>
