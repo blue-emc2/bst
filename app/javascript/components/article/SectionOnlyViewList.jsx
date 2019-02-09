@@ -6,20 +6,14 @@ import SectionOnlyView from './SectionOnlyView';
 class SectionOnlyViewList extends React.Component {
   constructor(props) {
     super(props);
-
-    const list = [...Array(props.rowCount)].map((_, index) => index);
-    this.state = { sections: list };
   }
 
   render () {
+    const { sections } = this.props.article;
+
     return (
-      // sectionsを元にcellを生成する
-      this.state.sections.map((id) =>
-        <SectionOnlyView
-          key={id}
-          data-key={id}
-          deleteSection={this.deleteSection}
-          {...this.props} />
+      sections.map((e, index) =>
+        <SectionOnlyView section={e} key={index} />
       )
     )
   }

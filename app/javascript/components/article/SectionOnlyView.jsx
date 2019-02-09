@@ -12,14 +12,14 @@ class SectionOnlyView extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { body } = this.props.section;
 
     return (
       <Grid item xs={6} container alignItems="center" justify="center">
         <Card>
           <CardContent>
             <Typography>
-              We are the champion
+              {body}
             </Typography>
           </CardContent>
         </Card>
