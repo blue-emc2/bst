@@ -45,43 +45,6 @@ const styles = theme => ({
   }
 })
 
-function Section({ body }) {
-  return (
-    <Card>
-      <CardContent>
-        <Typography>
-          { body }
-        </Typography>
-      </CardContent>
-    </Card>
-  )
-}
-
-Section.propTypes = {
-  body: PropTypes.any.isRequired
-}
-
-class Column extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render () {
-    const { sections } = this.props.article
-
-    // TODO: xsはとりあえずauto layoutにしておく
-    return (
-      <React.Fragment>
-        {sections.map((e) =>
-          <Grid item xs key={e.id}>
-            <Section body={e.body} />
-          </Grid>
-        )}
-      </React.Fragment>
-    )
-  }
-}
-
 class Article extends React.Component {
   constructor(props) {
     super(props)
