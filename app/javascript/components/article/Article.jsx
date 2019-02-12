@@ -6,9 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import Paper from "@material-ui/core/Paper";
 
 const styles = theme => ({
   root: {
@@ -28,62 +26,46 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 8}px 0`,
   },
   card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    height: 282,  // TODO: あとで可変にする
+    width: 400    // TODO: あとで可変にする
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
   },
   cardContent: {
     flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing.unit,
-    textAlign: "center",
-    color: theme.palette.text.secondary
   }
 })
 
-class Section extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+function SectionOnlyView(props) {
+  const { section } = props;
+  const { classes } = props;
 
-  render () {
-    const { classes } = this.props
-
-    return (
-      <Paper className={classes.paper}>item1</Paper>
-    )
-  }
+  return (
+    <Grid item xs={6} container alignItems="center" justify="center">
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography>
+            {section.body}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Grid>
+  )
 }
 
-class Column extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render () {
-    const { classes } = this.props
-    const { sections } = this.props.article
-
-    // TODO: xsはとりあえずauto layoutにしておく
-    return (
-      <React.Fragment>
-        {sections.map((e, index) =>
-          <Grid item xs key={index}>
-            <Section classes={classes} />
-          </Grid>
-        )}
-      </React.Fragment>
+function SectionOnlyViewList(props) {
+  return (
+    props.article.sections.map((e, index) =>
+      <SectionOnlyView section={e} key={index} {...props} />
     )
-  }
+  )
 }
 
-class ArticleBox extends React.Component {
+class Article extends React.Component {
   constructor(props) {
     super(props)
+    this.col = 12 / props.article.col;
   }
 
   render () {
@@ -93,14 +75,9 @@ class ArticleBox extends React.Component {
       <React.Fragment>
         <CssBaseline />
         <main>
-          <div className={classes.root}>
-            <Grid container spacing={8}>
-              <Grid container item xs={6} spacing={24} direction="column">
-                <Column classes={classes} article={this.props.article} />
-              </Grid>
-              <Grid container item xs={6} spacing={24} direction="column">
-                <Column classes={classes} article={this.props.article} />
-              </Grid>
+          <div className={classNames(classes.layout, classes.cardGrid)}>
+            <Grid container spacing={40}>
+              <SectionOnlyViewList {...this.props} />
             </Grid>
           </div>
         </main>
@@ -109,9 +86,9 @@ class ArticleBox extends React.Component {
   }
 }
 
-ArticleBox.propTypes = {
+Article.propTypes = {
   article: PropTypes.any.isRequired,
   sections: PropTypes.arrayOf(PropTypes.array)
 };
 
-export default withStyles(styles)(ArticleBox)
+export default withStyles(styles)(Article)
