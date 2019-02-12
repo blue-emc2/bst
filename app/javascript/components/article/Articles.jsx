@@ -47,6 +47,7 @@ class ArticleBoxes extends React.Component {
 
   render () {
     const { classes } = this.props;
+    const { articles } = this.props;
 
     return (
       <React.Fragment>
@@ -54,7 +55,7 @@ class ArticleBoxes extends React.Component {
         <main>
           <div className={classNames(classes.layout, classes.cardGrid)}>
             <Grid container spacing={40}>
-              {this.props.articles.map(article => (
+              {articles.map(article => (
                 <Grid item key={article.id} sm={6} md={4} lg={3}>
                   <Card className={classes.card}>
                     <CardActionArea>
@@ -69,7 +70,7 @@ class ArticleBoxes extends React.Component {
 
                     <CardContent className={classes.cardContent}>
                       <Typography>
-                        {article.sections[0].body}
+                        {article.sections[0] ? article.sections[0].body : ''}
                       </Typography>
                     </CardContent>
                   </Card>
