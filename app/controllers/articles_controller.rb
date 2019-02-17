@@ -27,8 +27,13 @@ class ArticlesController < ApplicationController
   # POST /articles
   def create
     @article = Article.new(col: article_params[:col])
-    article_params.fetch(:bodys, []).each do |body|
-      @article.sections << Section.new(body: body)
+
+    if article_params.has_key?(:bodys)
+      article_params.fetch(:bodys, []).each do |body|
+        @article.sections << Section.new(body: body)
+      end
+    else
+      @article.sections << Section.new(body: article_params[:photo])
     end
 
     if @article.save
@@ -70,6 +75,6 @@ class ArticlesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def article_params
-    params.require(:article).permit(:col, bodys: [])
+    params.require(:article).permit(:col, :photo, bodys: [])
   end
 end

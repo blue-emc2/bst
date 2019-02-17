@@ -21,6 +21,7 @@ function Preview({ data }) {
   );
 }
 
+// TODO: ちょっと名前が変、presenterとかにする？
 class Switcher extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +50,7 @@ class Switcher extends React.Component {
         onChange={this.onChange}
       />
     } else if(type === 1) {
-      return <ImageDropZone name="article[bodys][]" />
+      return <ImageDropZone name="article[photo]" />
     } else if (type === 2) {
       return <Preview data={this.valueStore} />
     }
