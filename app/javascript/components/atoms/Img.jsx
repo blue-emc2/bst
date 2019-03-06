@@ -6,3 +6,5 @@ function Img(props) {
     <CardMedia {...props} />
   )
 }
+
+export default Img;

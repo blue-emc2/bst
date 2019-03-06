@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Img from '../atoms/Img';
 
 const styles = theme => ({
   root: {
@@ -44,11 +45,12 @@ function SectionOnlyView(props) {
   return (
     <Grid item xs={6} container alignItems="center" justify="center">
       <Card className={classes.card}>
-        <CardContent>
+        <Img src={props.photo} />
+        {/* <CardContent>
           <Typography>
             {section.body}
           </Typography>
-        </CardContent>
+        </CardContent> */}
       </Card>
     </Grid>
   )

@@ -28,13 +28,13 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(col: article_params[:col])
 
-    if article_params[:bodys].empty?
+    # if article_params[:bodys].empty?
       @article.sections << Section.new(photo: article_params[:photo])
-    else
-      article_params.fetch(:bodys, []).each do |body|
-        @article.sections << Section.new(body: body)
-      end
-    end
+    # else
+    #   article_params.fetch(:bodys, []).each do |body|
+    #     @article.sections << Section.new(body: body)
+    #   end
+    # end
 
     if @article.save
       redirect_to @article, notice: 'Article was successfully created.'
