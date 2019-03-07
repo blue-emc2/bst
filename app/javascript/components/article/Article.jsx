@@ -31,6 +31,7 @@ const styles = theme => ({
     width: 400    // TODO: あとで可変にする
   },
   cardMedia: {
+    height: 0,
     paddingTop: '56.25%', // 16:9
   },
   cardContent: {
@@ -45,7 +46,7 @@ function SectionOnlyView(props) {
   return (
     <Grid item xs={6} container alignItems="center" justify="center">
       <Card className={classes.card}>
-        <Img src={props.photo} />
+        <Img image={section.photo} className={classes.cardMedia} />
         {/* <CardContent>
           <Typography>
             {section.body}
