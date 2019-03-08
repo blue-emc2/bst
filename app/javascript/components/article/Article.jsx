@@ -42,14 +42,21 @@ const styles = theme => ({
 function SectionView(props) {
   const { section } = props;
   const { classes } = props;
+  let c = null;
+
+  // なんかもうちょっとかっこよくしたい
+  if (section.body !== null) {
+    c = <CardContent>
+          <Text body={section.body} />
+        </CardContent>;
+  } else if (section.photo !== null) {
+    c = <Img image={section.photo} className={classes.cardMedia} />;
+  }
 
   return (
     <Grid item xs={6} container alignItems="center" justify="center">
       <Card className={classes.card}>
-        <Img image={section.photo} className={classes.cardMedia} />
-        <CardContent>
-          <Text body={section.body} />
-        </CardContent>
+        {c}
       </Card>
     </Grid>
   )
