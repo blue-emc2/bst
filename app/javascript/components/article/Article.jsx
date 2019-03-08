@@ -39,7 +39,7 @@ const styles = theme => ({
   }
 })
 
-function SectionOnlyView(props) {
+function SectionView(props) {
   const { section } = props;
   const { classes } = props;
 
@@ -55,10 +55,10 @@ function SectionOnlyView(props) {
   )
 }
 
-function SectionOnlyViewList(props) {
+function SectionViewList(props) {
   return (
     props.article.sections.map((e, index) =>
-      <SectionOnlyView section={e} key={index} {...props} />
+      <SectionView section={e} key={index} {...props} />
     )
   )
 }
@@ -78,7 +78,7 @@ class Article extends React.Component {
         <main>
           <div className={classNames(classes.layout, classes.cardGrid)}>
             <Grid container spacing={40}>
-              <SectionOnlyViewList {...this.props} />
+              <SectionViewList {...this.props} />
             </Grid>
           </div>
         </main>
