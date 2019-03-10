@@ -27,8 +27,13 @@ class ArticlesController < ApplicationController
   # POST /articles
   def create
     @article = Article.new(col: article_params[:col])
-    article_params.fetch(:bodys, []).each do |body|
-      @article.sections << Section.new(body: body)
+
+    article_params[:bodys].each do |body|
+      if body.kind_of?(String)
+        @article.sections << Section.new(body: body)
+      else
+        @article.sections << Section.new(photo: body)
+      end
     end
 
     if @article.save

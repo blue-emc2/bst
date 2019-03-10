@@ -21,6 +21,7 @@ function Preview({ data }) {
   );
 }
 
+// TODO: ちょっと名前が変、presenterとかにする？
 class Switcher extends React.Component {
   constructor(props) {
     super(props);

@@ -6,7 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import Img from '../atoms/Img';
+import Text from '../atoms/Text';
 
 const styles = theme => ({
   root: {
@@ -30,6 +31,7 @@ const styles = theme => ({
     width: 400    // TODO: あとで可変にする
   },
   cardMedia: {
+    height: 0,
     paddingTop: '56.25%', // 16:9
   },
   cardContent: {
@@ -37,27 +39,33 @@ const styles = theme => ({
   }
 })
 
-function SectionOnlyView(props) {
+function SectionView(props) {
   const { section } = props;
   const { classes } = props;
+  let c = null;
+
+  // なんかもうちょっとかっこよくしたい
+  if (section.body !== null) {
+    c = <CardContent>
+          <Text body={section.body} />
+        </CardContent>;
+  } else if (section.photo !== null) {
+    c = <Img image={section.photo} className={classes.cardMedia} />;
+  }
 
   return (
     <Grid item xs={6} container alignItems="center" justify="center">
       <Card className={classes.card}>
-        <CardContent>
-          <Typography>
-            {section.body}
-          </Typography>
-        </CardContent>
+        {c}
       </Card>
     </Grid>
   )
 }
 
-function SectionOnlyViewList(props) {
+function SectionViewList(props) {
   return (
     props.article.sections.map((e, index) =>
-      <SectionOnlyView section={e} key={index} {...props} />
+      <SectionView section={e} key={index} {...props} />
     )
   )
 }
@@ -77,7 +85,7 @@ class Article extends React.Component {
         <main>
           <div className={classNames(classes.layout, classes.cardGrid)}>
             <Grid container spacing={40}>
-              <SectionOnlyViewList {...this.props} />
+              <SectionViewList {...this.props} />
             </Grid>
           </div>
         </main>
