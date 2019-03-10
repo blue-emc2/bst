@@ -28,13 +28,13 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(col: article_params[:col])
 
-    # if article_params[:bodys].empty?
-      @article.sections << Section.new(photo: article_params[:photo])
-    # else
-    #   article_params.fetch(:bodys, []).each do |body|
-    #     @article.sections << Section.new(body: body)
-    #   end
-    # end
+    article_params[:bodys].each do |body|
+      if body.kind_of?(String)
+        @article.sections << Section.new(body: body)
+      else
+        @article.sections << Section.new(photo: body)
+      end
+    end
 
     if @article.save
       redirect_to @article, notice: 'Article was successfully created.'
@@ -75,6 +75,6 @@ class ArticlesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def article_params
-    params.require(:article).permit(:col, :photo, bodys: [])
+    params.require(:article).permit(:col, bodys: [])
   end
 end

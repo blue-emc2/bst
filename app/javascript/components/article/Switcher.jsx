@@ -50,7 +50,7 @@ class Switcher extends React.Component {
         onChange={this.onChange}
       />
     } else if(type === 1) {
-      return <ImageDropZone name="article[photo]" />
+      return <ImageDropZone name="article[bodys][]" />
     } else if (type === 2) {
       return <Preview data={this.valueStore} />
     }
