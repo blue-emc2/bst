@@ -11,8 +11,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
 
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1,
   },
@@ -23,7 +24,10 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-};
+  button: {
+    margin: theme.spacing.unit,
+  }
+});
 
 class Header extends React.Component {
   state = {
@@ -63,6 +67,9 @@ class Header extends React.Component {
             <Typography variant="h6" color="inherit" className={classes.grow}>
               BST
             </Typography>
+            <Button color="primary" variant="contained" className={classes.button}>
+              ストーリーを書いてみる
+            </Button>
             {auth && (
               <div>
                 <IconButton
