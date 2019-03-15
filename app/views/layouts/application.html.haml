@@ -9,5 +9,5 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application'
   %body
-    = react_component("Header")
+    = react_component("Header", showing_new_story: [root_path, articles_path].include?(request.fullpath) ? true : false)
     = yield

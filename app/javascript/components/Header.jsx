@@ -47,29 +47,40 @@ class Header extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  constructor(props) {
+    super(props);
+    this.onClickNewStory = this.onClickNewStory.bind(this);
+  }
+
+  onClickNewStory() {
+    location.href = 'articles/new'
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, showing_new_story } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
       <div className={classes.root}>
-        <FormGroup>
+        {/* <FormGroup>
           <FormControlLabel
             control={
               <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
             }
             label={auth ? 'Logout' : 'Login'}
           />
-        </FormGroup>
+        </FormGroup> */}
         <AppBar position="static" color="default">
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               BST
             </Typography>
-            <Button color="primary" variant="contained" className={classes.button}>
-              ストーリーを書いてみる
-            </Button>
+            {showing_new_story &&
+              <Button color="primary" variant="contained" className={classes.button} onClick={this.onClickNewStory}>
+                ストーリーを書いてみる
+              </Button>
+            }
             {auth && (
               <div>
                 <IconButton
