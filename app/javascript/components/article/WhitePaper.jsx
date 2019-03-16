@@ -8,6 +8,8 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import SectionList from './SectionList';
+import Footer from '../Footer';
+import WhitePaperFooter from '../WhitePaperFooter';
 
 const styles = theme => ({
   root: {
@@ -31,10 +33,12 @@ const styles = theme => ({
     width: 400    // TODO: あとで可変にする
   },
   fab: {
-    margin: theme.spacing.unit,
-    position: 'fixed',
+    position: 'absolute',
+    zIndex: 1,
+    top: -30,
+    left: 0,
     right: 0,
-    bottom: 0
+    margin: '0 auto',
   },
 })
 
@@ -43,8 +47,8 @@ class WhitePaper extends React.Component {
     super(props);
     this.state = { rowCount: "1" };
     this.sectionRef = React.createRef();
-    this.onClick = this.onClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onAddSectionEvent = this.onAddSectionEvent.bind(this);
   }
 
   onClick() {
@@ -53,6 +57,10 @@ class WhitePaper extends React.Component {
 
   handleChange(event) {
     this.setState({rowCount: event.target.value});
+  }
+
+  onAddSectionEvent() {
+    this.sectionRef.addSection();
   }
 
   render () {
@@ -70,9 +78,6 @@ class WhitePaper extends React.Component {
               <option value={"3"}>3列</option>
             </select>
           </label>
-          <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.onClick}>
-            <AddIcon />
-          </Fab>
           <div className={classNames(classes.layout, classes.cardGrid)}>
             <Grid container spacing={40} >
               <SectionList
@@ -82,6 +87,10 @@ class WhitePaper extends React.Component {
             </Grid>
           </div>
         </main>
+        {/* 名前が微妙すぎる... */}
+        <Footer render={() =>
+          <WhitePaperFooter addSectionEvent={this.onAddSectionEvent} />
+        } />
       </React.Fragment>
     )
   }
