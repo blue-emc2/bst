@@ -53,6 +53,7 @@ class Header extends React.Component {
   }
 
   onClickNewStory() {
+    // TODO: URLが固定になっちゃってるのが気になる
     location.href = 'articles/new'
   }
 
