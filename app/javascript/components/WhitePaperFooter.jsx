@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   fabButton: {
@@ -12,6 +13,9 @@ const styles = theme => ({
     left: 0,
     right: 0,
     margin: '0 auto',
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
 });
 
@@ -29,11 +33,17 @@ class WhitePaperFooter extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <React.Fragment>
+        <Button variant="contained" className={classes.button}>
+          TOP画面へ
+        </Button>
         <Fab color="secondary" aria-label="Add" className={classes.fabButton} onClick={this.onClick}>
           <AddIcon />
         </Fab>
-      </div>
+        <Button variant="contained" color="primary" className={classes.button}>
+          ストーリーを確認する
+        </Button>
+      </React.Fragment>
     )
   }
 }
