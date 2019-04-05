@@ -12,6 +12,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -52,68 +53,65 @@ class Header extends React.Component {
     this.onClickNewStory = this.onClickNewStory.bind(this);
   }
 
-  onClickNewStory() {
-    // TODO: URLが固定になっちゃってるのが気になる
-    location.href = 'articles/new'
-  }
-
   render() {
     const { classes, showing_new_story } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
-      <div className={classes.root}>
-        {/* <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
-            }
-            label={auth ? 'Logout' : 'Login'}
-          />
-        </FormGroup> */}
-        <AppBar position="static" color="default">
-          <Toolbar>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              BST
-            </Typography>
-            {showing_new_story &&
-              <Button color="primary" variant="contained" className={classes.button} onClick={this.onClickNewStory}>
-                ストーリーを書いてみる
-              </Button>
-            }
-            {auth && (
-              <div>
-                <IconButton
-                  aria-owns={open ? 'menu-appbar' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleMenu}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                </Menu>
-              </div>
-            )}
-          </Toolbar>
-        </AppBar>
-      </div>
+      <Router forceRefresh={true}>
+        <div className={classes.root}>
+          {/* <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
+              }
+              label={auth ? 'Logout' : 'Login'}
+            />
+          </FormGroup> */}
+          <AppBar position="static" color="default">
+            <Toolbar>
+              <Typography variant="h6" color="inherit" className={classes.grow}>
+                BST
+              </Typography>
+              {showing_new_story &&
+                <Button color="primary" variant="contained" className={classes.button} component={Link} to={"/articles/new"}>
+                  ストーリーを書いてみる
+                </Button>
+              }
+              {auth && (
+                <div>
+                  <IconButton
+                    aria-owns={open ? 'menu-appbar' : undefined}
+                    aria-haspopup="true"
+                    onClick={this.handleMenu}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={open}
+                    onClose={this.handleClose}
+                  >
+                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  </Menu>
+                </div>
+              )}
+            </Toolbar>
+          </AppBar>
+        </div>
+      </Router>
     );
   }
 }
