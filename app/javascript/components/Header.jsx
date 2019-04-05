@@ -50,7 +50,6 @@ class Header extends React.Component {
 
   constructor(props) {
     super(props);
-    this.onClickNewStory = this.onClickNewStory.bind(this);
   }
 
   render() {
