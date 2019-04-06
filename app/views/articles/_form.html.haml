@@ -7,7 +7,7 @@
           %li= message
 
   .field
-    = react_component("article/WhitePaper", article: @article)
+    = react_component("article/WhitePaper", article: @article, articles_path: articles_path)
 
   .actions
     = f.submit 'Save'

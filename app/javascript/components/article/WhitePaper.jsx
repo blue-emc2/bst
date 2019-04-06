@@ -64,7 +64,7 @@ class WhitePaper extends React.Component {
   }
 
   render () {
-    const { classes } = this.props;
+    const { classes, articles_path } = this.props;
 
     return (
       <React.Fragment>
@@ -89,7 +89,7 @@ class WhitePaper extends React.Component {
         </main>
         {/* 名前が微妙すぎる... */}
         <Footer render={() =>
-          <WhitePaperFooter addSectionEvent={this.onAddSectionEvent} />
+          <WhitePaperFooter addSectionEvent={this.onAddSectionEvent} articles_path={articles_path} />
         } />
       </React.Fragment>
     )

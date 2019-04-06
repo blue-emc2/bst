@@ -4,6 +4,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 const styles = theme => ({
   fabButton: {
@@ -30,19 +31,21 @@ class WhitePaperFooter extends React.Component {
   }
 
   render () {
-    const { classes } = this.props;
+    const { classes, articles_path } = this.props;
 
     return (
       <React.Fragment>
-        <Button variant="contained" className={classes.button}>
-          TOP画面へ
-        </Button>
-        <Fab color="secondary" aria-label="Add" className={classes.fabButton} onClick={this.onClick}>
-          <AddIcon />
-        </Fab>
-        <Button variant="contained" color="primary" className={classes.button}>
-          ストーリーを確認する
-        </Button>
+        <Router forceRefresh={true}>
+          <Button variant="contained" className={classes.button} component={Link} to={articles_path}>
+            TOP画面へ
+          </Button>
+          <Fab color="secondary" aria-label="Add" className={classes.fabButton} onClick={this.onClick}>
+            <AddIcon />
+          </Fab>
+          <Button variant="contained" color="primary" className={classes.button}>
+            ストーリーを確認する
+          </Button>
+        </Router>
       </React.Fragment>
     )
   }
