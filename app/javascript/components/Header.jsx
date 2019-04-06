@@ -53,7 +53,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { classes, showing_new_story } = this.props;
+    const { classes, showing_new_story, new_article_path } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
@@ -74,7 +74,7 @@ class Header extends React.Component {
                 BST
               </Typography>
               {showing_new_story &&
-                <Button color="primary" variant="contained" className={classes.button} component={Link} to={"/articles/new"}>
+                <Button color="primary" variant="contained" className={classes.button} component={Link} to={new_article_path}>
                   ストーリーを書いてみる
                 </Button>
               }
