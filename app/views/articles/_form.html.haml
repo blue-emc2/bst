@@ -1,13 +1,1 @@
-= form_with model: @article, multipart: true do |f|
-  - if @article.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@article.errors.count, "error")} prohibited this article from being saved:"
-      %ul
-        - @article.errors.full_messages.each do |message|
-          %li= message
-
-  .field
-    = react_component("article/WhitePaper", article: @article, articles_path: articles_path)
-
-  .actions
-    = f.submit 'Save'
+= react_component("article/WhitePaper", article: @article, articles_path: articles_path)

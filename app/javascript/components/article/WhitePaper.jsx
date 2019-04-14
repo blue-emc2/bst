@@ -4,12 +4,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Grid from '@material-ui/core/Grid';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-
 import SectionList from './SectionList';
 import Footer from '../Footer';
 import WhitePaperFooter from '../WhitePaperFooter';
+import FormControl from '@material-ui/core/FormControl';
 
 const styles = theme => ({
   root: {
@@ -32,13 +30,8 @@ const styles = theme => ({
     height: 282,  // TODO: あとで可変にする
     width: 400    // TODO: あとで可変にする
   },
-  fab: {
-    position: 'absolute',
-    zIndex: 1,
-    top: -30,
-    left: 0,
-    right: 0,
-    margin: '0 auto',
+  formControl: {
+    margin: theme.spacing.unit * 3,
   },
 })
 
@@ -78,19 +71,23 @@ class WhitePaper extends React.Component {
               <option value={"3"}>3列</option>
             </select>
           </label>
-          <div className={classNames(classes.layout, classes.cardGrid)}>
-            <Grid container spacing={40} >
-              <SectionList
-                rowCount={this.state.rowCount}
-                ref={(ref) => { this.sectionRef = ref; }}
-                {...this.props} />
-            </Grid>
-          </div>
+          <form>
+            <FormControl component="fieldset" className={classes.formControl}>
+              <div className={classNames(classes.layout, classes.cardGrid)}>
+                <Grid container spacing={40} >
+                  <SectionList
+                    rowCount={this.state.rowCount}
+                    ref={(ref) => { this.sectionRef = ref; }}
+                    {...this.props} />
+                </Grid>
+              </div>
+              {/* 名前が微妙すぎる... */}
+              <Footer render={() =>
+                <WhitePaperFooter addSectionEvent={this.onAddSectionEvent} articles_path={articles_path} />
+              } />
+            </FormControl>
+          </form>
         </main>
-        {/* 名前が微妙すぎる... */}
-        <Footer render={() =>
-          <WhitePaperFooter addSectionEvent={this.onAddSectionEvent} articles_path={articles_path} />
-        } />
       </React.Fragment>
     )
   }
