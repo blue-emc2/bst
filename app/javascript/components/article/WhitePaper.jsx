@@ -42,10 +42,7 @@ class WhitePaper extends React.Component {
     this.sectionRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.onAddSectionEvent = this.onAddSectionEvent.bind(this);
-  }
-
-  onClick() {
-    this.sectionRef.addSection();
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
@@ -55,6 +52,8 @@ class WhitePaper extends React.Component {
   onAddSectionEvent() {
     this.sectionRef.addSection();
   }
+
+  handleSubmit
 
   render () {
     const { classes, articles_path } = this.props;
@@ -71,7 +70,7 @@ class WhitePaper extends React.Component {
               <option value={"3"}>3列</option>
             </select>
           </label>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <FormControl component="fieldset" className={classes.formControl}>
               <div className={classNames(classes.layout, classes.cardGrid)}>
                 <Grid container spacing={40} >

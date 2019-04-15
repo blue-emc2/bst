@@ -5,6 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import axios from 'axios';
 
 const styles = theme => ({
   fabButton: {
@@ -24,10 +25,20 @@ class WhitePaperFooter extends React.Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
+    this.onClickSubmit = this.onClickSubmit.bind(this);
+
+    axios.defaults.headers.common['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').getAttribute('content');
   }
 
   onClick() {
     this.props.addSectionEvent();
+  }
+
+  onClickSubmit() {
+    axios.post("/articles", {})
+    .then(response => {
+      console.log(response.data);
+    });
   }
 
   render () {
@@ -42,7 +53,7 @@ class WhitePaperFooter extends React.Component {
           <Fab color="secondary" aria-label="Add" className={classes.fabButton} onClick={this.onClick}>
             <AddIcon />
           </Fab>
-          <Button variant="contained" color="primary" className={classes.button}>
+          <Button variant="contained" color="primary" className={classes.button} onClick={this.onClickSubmit} type="submit">
             ストーリーを確認する
           </Button>
         </Router>
