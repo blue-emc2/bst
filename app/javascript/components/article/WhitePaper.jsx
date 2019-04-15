@@ -8,6 +8,7 @@ import SectionList from './SectionList';
 import Footer from '../Footer';
 import WhitePaperFooter from '../WhitePaperFooter';
 import FormControl from '@material-ui/core/FormControl';
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -43,6 +44,8 @@ class WhitePaper extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onAddSectionEvent = this.onAddSectionEvent.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    axios.defaults.headers.common['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').getAttribute('content');
   }
 
   handleChange(event) {
@@ -53,7 +56,15 @@ class WhitePaper extends React.Component {
     this.sectionRef.addSection();
   }
 
-  handleSubmit
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const data = new FormData(event.target);
+    axios.post("/articles", data)
+    .then(response => {
+      console.log(response.data);
+    });
+  }
 
   render () {
     const { classes, articles_path } = this.props;
