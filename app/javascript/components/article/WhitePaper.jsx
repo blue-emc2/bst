@@ -9,6 +9,7 @@ import Footer from '../Footer';
 import WhitePaperFooter from '../WhitePaperFooter';
 import FormControl from '@material-ui/core/FormControl';
 import axios from 'axios';
+import { BrowserRouter as Route, Redirect } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -39,7 +40,7 @@ const styles = theme => ({
 class WhitePaper extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { rowCount: "1" };
+    this.state = { rowCount: "1", fireRedirect: false, to: "/" };
     this.sectionRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.onAddSectionEvent = this.onAddSectionEvent.bind(this);
@@ -62,12 +63,13 @@ class WhitePaper extends React.Component {
     const data = new FormData(event.target);
     axios.post("/articles", data)
     .then(response => {
-      console.log(response.data);
+      this.setState({ fireRedirect: true, to: response.data })
     });
   }
 
   render () {
     const { classes, articles_path } = this.props;
+    const { fireRedirect, to } = this.state;
 
     return (
       <React.Fragment>
@@ -81,22 +83,28 @@ class WhitePaper extends React.Component {
               <option value={"3"}>3列</option>
             </select>
           </label>
-          <form onSubmit={this.handleSubmit}>
-            <FormControl component="fieldset" className={classes.formControl}>
-              <div className={classNames(classes.layout, classes.cardGrid)}>
-                <Grid container spacing={40} >
-                  <SectionList
-                    rowCount={this.state.rowCount}
-                    ref={(ref) => { this.sectionRef = ref; }}
-                    {...this.props} />
-                </Grid>
-              </div>
-              {/* 名前が微妙すぎる... */}
-              <Footer render={() =>
-                <WhitePaperFooter addSectionEvent={this.onAddSectionEvent} articles_path={articles_path} />
-              } />
-            </FormControl>
-          </form>
+          <Route forceRefresh={true}>
+            <form onSubmit={this.handleSubmit}>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <div className={classNames(classes.layout, classes.cardGrid)}>
+                  <Grid container spacing={40} >
+                    <SectionList
+                      rowCount={this.state.rowCount}
+                      ref={(ref) => { this.sectionRef = ref; }}
+                      {...this.props} />
+                  </Grid>
+                </div>
+                {/* 名前が微妙すぎる... */}
+                <Footer render={() =>
+                  <WhitePaperFooter addSectionEvent={this.onAddSectionEvent} articles_path={articles_path} />
+                } />
+              </FormControl>
+              {
+                fireRedirect &&
+                  <Redirect to={to} />
+              }
+            </form>
+          </Route>
         </main>
       </React.Fragment>
     )
