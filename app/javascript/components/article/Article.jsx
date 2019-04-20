@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Img from '../atoms/Img';
 import Text from '../atoms/Text';
+import Footer from '../Footer';
 
 const styles = theme => ({
   root: {
@@ -89,6 +90,9 @@ class Article extends React.Component {
             </Grid>
           </div>
         </main>
+        <Footer render={() =>
+          <div></div>
+        } />
       </React.Fragment>
     )
   }

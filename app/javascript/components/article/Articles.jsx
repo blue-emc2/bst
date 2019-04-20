@@ -9,6 +9,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import Footer from '../Footer';
 
 const styles = theme => ({
   root: {
@@ -79,6 +80,9 @@ class ArticleBoxes extends React.Component {
             </Grid>
           </div>
         </main>
+        <Footer render={() =>
+          <div></div>
+        } />
       </React.Fragment>
     )
   }
