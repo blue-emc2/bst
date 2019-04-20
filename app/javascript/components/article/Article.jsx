@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Img from '../atoms/Img';
 import Text from '../atoms/Text';
 import Footer from '../Footer';
+import LinkButton from '../atoms/LinkButton';
 
 const styles = theme => ({
   root: {
@@ -78,7 +79,7 @@ class Article extends React.Component {
   }
 
   render () {
-    const { classes } = this.props
+    const { classes, articles_path } = this.props
 
     return (
       <React.Fragment>
@@ -91,7 +92,9 @@ class Article extends React.Component {
           </div>
         </main>
         <Footer render={() =>
-          <div></div>
+          <LinkButton to={articles_path}>
+            TOP画面へ
+          </LinkButton>
         } />
       </React.Fragment>
     )
