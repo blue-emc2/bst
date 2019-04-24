@@ -4,10 +4,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Grid from '@material-ui/core/Grid';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-
 import SectionList from './SectionList';
+import Footer from '../Footer';
+import WhitePaperFooter from '../WhitePaperFooter';
+import FormControl from '@material-ui/core/FormControl';
+import axios from 'axios';
+import { BrowserRouter as Route, Redirect } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -30,33 +32,44 @@ const styles = theme => ({
     height: 282,  // TODO: あとで可変にする
     width: 400    // TODO: あとで可変にする
   },
-  fab: {
-    margin: theme.spacing.unit,
-    position: 'fixed',
-    right: 0,
-    bottom: 0
+  formControl: {
+    margin: theme.spacing.unit * 3,
   },
 })
 
 class WhitePaper extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { rowCount: "1" };
+    this.state = { rowCount: "1", fireRedirect: false, to: "/" };
     this.sectionRef = React.createRef();
-    this.onClick = this.onClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
+    this.onAddSectionEvent = this.onAddSectionEvent.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
-  onClick() {
-    this.sectionRef.addSection();
+    axios.defaults.headers.common['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').getAttribute('content');
   }
 
   handleChange(event) {
     this.setState({rowCount: event.target.value});
   }
 
+  onAddSectionEvent() {
+    this.sectionRef.addSection();
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const data = new FormData(event.target);
+    axios.post("/articles", data)
+    .then(response => {
+      this.setState({ fireRedirect: true, to: response.data })
+    });
+  }
+
   render () {
-    const { classes } = this.props;
+    const { classes, articles_path } = this.props;
+    const { fireRedirect, to } = this.state;
 
     return (
       <React.Fragment>
@@ -70,17 +83,28 @@ class WhitePaper extends React.Component {
               <option value={"3"}>3列</option>
             </select>
           </label>
-          <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.onClick}>
-            <AddIcon />
-          </Fab>
-          <div className={classNames(classes.layout, classes.cardGrid)}>
-            <Grid container spacing={40} >
-              <SectionList
-                rowCount={this.state.rowCount}
-                ref={(ref) => { this.sectionRef = ref; }}
-                {...this.props} />
-            </Grid>
-          </div>
+          <Route forceRefresh={true}>
+            <form onSubmit={this.handleSubmit}>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <div className={classNames(classes.layout, classes.cardGrid)}>
+                  <Grid container spacing={40} >
+                    <SectionList
+                      rowCount={this.state.rowCount}
+                      ref={(ref) => { this.sectionRef = ref; }}
+                      {...this.props} />
+                  </Grid>
+                </div>
+                {/* 名前が微妙すぎる... */}
+                <Footer render={() =>
+                  <WhitePaperFooter addSectionEvent={this.onAddSectionEvent} articles_path={articles_path} />
+                } />
+              </FormControl>
+              {
+                fireRedirect &&
+                  <Redirect to={to} />
+              }
+            </form>
+          </Route>
         </main>
       </React.Fragment>
     )

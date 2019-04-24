@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:edit, :update, :destroy]
+  before_action :set_article, only: %i[edit update destroy]
 
   # GET /articles
   def index
@@ -29,17 +29,17 @@ class ArticlesController < ApplicationController
     @article = Article.new(col: article_params[:col])
 
     article_params[:bodys].each do |body|
-      if body.kind_of?(String)
-        @article.sections << Section.new(body: body)
-      else
-        @article.sections << Section.new(photo: body)
-      end
+      @article.sections << if body.is_a?(String)
+                             Section.new(body: body)
+                           else
+                             Section.new(photo: body)
+                           end
     end
 
     if @article.save
-      redirect_to @article, notice: 'Article was successfully created.'
+      render json: article_path(@article)
     else
-      render :new
+      render json: new_article_path_path
     end
   end
 
